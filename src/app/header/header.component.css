@@ -28,6 +28,7 @@ input:focus {
   outline: none;
 }
 
+/* Remove spin buttons for number input type in WebKit browsers */
 input::-webkit-inner-spin-button,
 input::-webkit-outer-spin-button {
   -webkit-appearance: none;

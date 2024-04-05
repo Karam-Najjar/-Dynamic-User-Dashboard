@@ -7,7 +7,7 @@ import { User } from '../user.interface';
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrl: './users-list.component.css',
+  styleUrls: ['./users-list.component.css'],
 })
 export class UsersListComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
