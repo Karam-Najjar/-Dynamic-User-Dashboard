@@ -8,9 +8,13 @@
       <app-user-card *ngFor="let user of users" [user]="user"></app-user-card>
     </div>
     <div class="pagination">
-      <button (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
-      <span>Page {{ currentPage }}</span>
-      <button (click)="nextPage()">Next</button>
+      <div class="pagination-buttons">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">
+          Prev
+        </button>
+        <span>Page {{ currentPage }}</span>
+        <button (click)="nextPage()">Next</button>
+      </div>
     </div>
   </div>
 </ng-container>

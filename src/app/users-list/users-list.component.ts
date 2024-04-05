@@ -34,10 +34,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
           this.totalPages = users.total_pages;
           this.isLoading = false;
         },
-        error: (error) => {
-          this.error = 'An error occurred while fetching users.';
+        error: () => {
+          this.error = 'An error occurred while fetching users';
           this.isLoading = false;
-          alert(error);
+          alert(this.error);
         },
       });
   }

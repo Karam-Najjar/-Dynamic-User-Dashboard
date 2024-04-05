@@ -36,8 +36,8 @@ export class UserDetailsComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        this.error = 'An error occurred while fetching users.';
         this.isLoading = false;
+        this.error = 'An error occurred while fetching the user';
         alert(error);
       },
     });
