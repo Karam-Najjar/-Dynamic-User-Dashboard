@@ -1,0 +1,39 @@
+.user-details {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.back-button {
+  margin: 20px;
+}
+
+.back-button button {
+  background-color: #9ba3ac;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.back-button button:hover {
+  background-color: #b2c4d8;
+}
+
+.user-info {
+  display: flex;
+}
+
+.avatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
