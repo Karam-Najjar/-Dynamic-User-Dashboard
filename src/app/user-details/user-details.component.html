@@ -1,15 +1,21 @@
-<div class="user-details" *ngIf="user">
-  <div class="back-button">
-    <button (click)="goBack()">Back</button>
-  </div>
-  <div class="user-info">
-    <div class="avatar">
-      <img [src]="user.avatar" alt="User Avatar" />
+<ng-container *ngIf="isLoading">
+  <app-spinner></app-spinner>
+</ng-container>
+
+<ng-container *ngIf="!isLoading">
+  <div class="user-details" *ngIf="user">
+    <div class="back-button">
+      <button (click)="goBack()">Back</button>
     </div>
-    <div class="details">
-      <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-      <p><strong>Email:</strong> {{ user.email }}</p>
-      <p><strong>ID:</strong> {{ user.id }}</p>
+    <div class="user-info">
+      <div class="avatar">
+        <img [src]="user.avatar" alt="User Avatar" />
+      </div>
+      <div class="details">
+        <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>ID:</strong> {{ user.id }}</p>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

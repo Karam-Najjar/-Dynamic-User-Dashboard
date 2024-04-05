@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserService } from '../user.service';
+import { User } from '../user.interface';
 
 @Component({
   selector: 'app-user-details',
@@ -10,7 +11,9 @@ import { UserService } from '../user.service';
 })
 export class UserDetailsComponent implements OnInit {
   userId!: number;
-  user!: any;
+  user!: User;
+  isLoading: boolean = false;
+  error: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,8 +29,17 @@ export class UserDetailsComponent implements OnInit {
   }
 
   fetchUserDetails(): void {
-    this.userService.getUserDetails(this.userId).subscribe((user) => {
-      this.user = user.data;
+    this.isLoading = true;
+    this.userService.getUserDetails(this.userId).subscribe({
+      next: (users: any) => {
+        this.user = users.data;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.error = 'An error occurred while fetching users.';
+        this.isLoading = false;
+        alert(error);
+      },
     });
   }
 
