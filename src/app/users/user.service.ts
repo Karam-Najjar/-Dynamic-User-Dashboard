@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { User } from './user.interface';
+import { IUser } from '../store/types/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +10,11 @@ import { User } from './user.interface';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getUsers(page: number): Observable<User[]> {
-    return this.http.get<User[]>(`https://reqres.in/api/users?page=${page}`);
+  getUsers(page: number): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`https://reqres.in/api/users?page=${page}`);
   }
 
   getUserDetails(id: number): Observable<any> {
-    return this.http.get<User>(`https://reqres.in/api/users/${id}`);
+    return this.http.get<IUser>(`https://reqres.in/api/users/${id}`);
   }
 }

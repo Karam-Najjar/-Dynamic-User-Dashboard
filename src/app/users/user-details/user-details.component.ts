@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserService } from '../user.service';
-import { User } from '../user.interface';
+import { IUser } from '../../store/types/user.interface';
 
 @Component({
   selector: 'app-user-details',
@@ -11,7 +11,7 @@ import { User } from '../user.interface';
 })
 export class UserDetailsComponent implements OnInit {
   userId!: number;
-  user!: User;
+  user!: IUser;
   isLoading: boolean = false;
   error: string | null = null;
 

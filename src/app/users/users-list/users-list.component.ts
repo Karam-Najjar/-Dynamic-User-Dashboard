@@ -1,8 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
-import { UserService } from '../user.service';
-import { User } from '../user.interface';
+import {
+  isLoadingSelector,
+  errorSelector,
+  usersSelector,
+  selectTotalUsers,
+} from '../../store/selectors';
+import { AppStateInterface } from '../../types/appState.interface';
+import { IUser } from '../../store/types/user.interface';
+import * as UsersActions from '../../store/actions';
 
 @Component({
   selector: 'app-users-list',
@@ -11,35 +19,30 @@ import { User } from '../user.interface';
 })
 export class UsersListComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
-  users: User[] = [];
+  users: IUser[] = [];
   currentPage = 1;
   totalPages = 1;
   isLoading: boolean = false;
   error: string | null = null;
 
-  constructor(private userService: UserService) {}
+  isLoading$!: Observable<boolean>;
+  error$!: Observable<string | null>;
+  users$!: Observable<IUser[]>;
+  totalUsers$!: Observable<number>;
+
+  constructor(private store: Store<AppStateInterface>) {
+    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
+    this.error$ = this.store.pipe(select(errorSelector));
+    this.users$ = this.store.pipe(select(usersSelector));
+    this.totalUsers$ = this.store.pipe(select(selectTotalUsers));
+  }
 
   ngOnInit(): void {
     this.fetchUsers();
   }
 
   fetchUsers(): void {
-    this.isLoading = true;
-    this.userService
-      .getUsers(this.currentPage)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (users: any) => {
-          this.users = users.data;
-          this.totalPages = users.total_pages;
-          this.isLoading = false;
-        },
-        error: () => {
-          this.error = 'An error occurred while fetching users';
-          this.isLoading = false;
-          alert(this.error);
-        },
-      });
+    this.store.dispatch(UsersActions.getUsers({ page: this.currentPage }));
   }
 
   nextPage(): void {

@@ -1,20 +1,19 @@
-<ng-container *ngIf="isLoading">
-  <app-spinner></app-spinner>
-</ng-container>
+<div *ngIf="isLoading$ | async">Loading...</div>
 
-<ng-container *ngIf="!isLoading">
-  <div class="users-list">
-    <div class="user-cards">
-      <app-user-card *ngFor="let user of users" [user]="user"></app-user-card>
-    </div>
-    <div class="pagination">
-      <div class="pagination-buttons">
-        <button (click)="prevPage()" [disabled]="currentPage === 1">
-          Prev
-        </button>
-        <span>Page {{ currentPage }}</span>
-        <button (click)="nextPage()">Next</button>
-      </div>
+<div *ngIf="error$ | async as error">{{ error }}</div>
+
+<div class="users-list">
+  <div class="user-cards">
+    <app-user-card
+      *ngFor="let user of users$ | async"
+      [user]="user"
+    ></app-user-card>
+  </div>
+  <div class="pagination">
+    <div class="pagination-buttons">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+      <span>Page {{ currentPage }}</span>
+      <button (click)="nextPage()">Next</button>
     </div>
   </div>
-</ng-container>
+</div>
