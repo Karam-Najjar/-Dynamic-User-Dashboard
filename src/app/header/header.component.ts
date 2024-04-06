@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { AppStateInterface } from '../types/appState.interface';
-import * as UsersActions from '../store/actions';
+import * as UsersActions from '../users/store/actions';
 
 @Component({
   selector: 'app-header',

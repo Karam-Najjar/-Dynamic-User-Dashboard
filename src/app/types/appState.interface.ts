@@ -1,4 +1,4 @@
-import { UsersStateInterface } from '../store/types/usersState.interface';
+import { UsersStateInterface } from '../users/types/usersState.interface';
 
 export interface AppStateInterface {
   users: UsersStateInterface;

@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable, take } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
 import {
@@ -7,34 +7,29 @@ import {
   errorSelector,
   usersSelector,
   selectTotalUsers,
-} from '../../store/selectors';
+} from '../store/selectors';
 import { AppStateInterface } from '../../types/appState.interface';
-import { IUser } from '../../store/types/user.interface';
-import * as UsersActions from '../../store/actions';
+import { IUser } from '../types/user.interface';
+import * as UsersActions from '../store/actions';
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.css'],
 })
-export class UsersListComponent implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
-  users: IUser[] = [];
+export class UsersListComponent implements OnInit {
   currentPage = 1;
-  totalPages = 1;
-  isLoading: boolean = false;
-  error: string | null = null;
 
   isLoading$!: Observable<boolean>;
   error$!: Observable<string | null>;
   users$!: Observable<IUser[]>;
-  totalUsers$!: Observable<number>;
+  totalPages$!: Observable<number>;
 
   constructor(private store: Store<AppStateInterface>) {
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
     this.error$ = this.store.pipe(select(errorSelector));
     this.users$ = this.store.pipe(select(usersSelector));
-    this.totalUsers$ = this.store.pipe(select(selectTotalUsers));
+    this.totalPages$ = this.store.pipe(select(selectTotalUsers));
   }
 
   ngOnInit(): void {
@@ -46,10 +41,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.fetchUsers();
-    }
+    this.totalPages$.pipe(take(1)).subscribe((totalPages) => {
+      if (this.currentPage < totalPages) {
+        this.currentPage++;
+        this.fetchUsers();
+      }
+    });
   }
 
   prevPage(): void {
@@ -57,10 +54,5 @@ export class UsersListComponent implements OnInit, OnDestroy {
       this.currentPage--;
       this.fetchUsers();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { UsersStateInterface } from './types/usersState.interface';
 import * as UsersActions from './actions';
+import { UsersStateInterface } from '../types/usersState.interface';
 
 export const initialState: UsersStateInterface = {
   isLoading: false,

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserService } from '../user.service';
-import { IUser } from '../../store/types/user.interface';
+import { IUser } from '../types/user.interface';
 
 @Component({
   selector: 'app-user-details',
